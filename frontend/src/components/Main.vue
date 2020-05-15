@@ -1,12 +1,11 @@
 <template>
   <div class="wrapper">
-
     <template v-if="connectionCheck">
       <!-- Sidebar  -->
       <LSidebar
         @channelUpdate="channelUpdate"></LSidebar>
       <!-- Page Content  -->
-      <div id="m-wrapper" v-bind:class="{active: $store.state.isLActive}">
+      <div id="m-wrapper" :class="{active: $store.state.isLActive}">
         <MainHeader @channelUpdate="channelUpdate" @hihi="hihi"></MainHeader>
         <NoChannel v-if="$store.state.userChannelList[0]==null && $store.state.selectComponent=='main'"/>
         <!-- CjannelHeader -->
@@ -119,10 +118,6 @@
     updated() {
     },
     methods: {
-      hihi(){
-        console.log('ss',this.$store.state.selectComponent)
-        console.log('sslist',this.$store.state.userChannelList[0])
-      },
       connect() {
         // 새로고침 했을때 Main의 로직이 실행되지 않는 환경에서는 문제가 생길 수 있음
         this.$store.state.stompClient = Stomp.over(new SockJS('/endpoint/'))
@@ -170,7 +165,6 @@
             return;
           }
         })
-        // this.$store.commit('setChannelList', newChannelList)
       },
       msgArrayUpdate(newmsgArray) {
         this.msgArray = newmsgArray
@@ -210,10 +204,11 @@
       },
       msgCountReset(i) {
         this.$store.state.userChannelList[i].count = 0
-      }
-
+      },
+      
     }
 
   }
 
 </script>
+
