@@ -25,6 +25,23 @@ import commonMixin from './mixins/commonMixin'
 import messageMixin from './mixins/messageMixin'
 import moment from "moment";
 
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import Quill from 'quill';
+import VueQuillEditor from 'vue-quill-editor'
+// import MarkdownShortcuts from 'quill-markdown-shortcuts'
+import MarkdownShortcuts from '../quill-markdown-shortcuts'
+
+Quill.register('modules/markdownShortcuts', MarkdownShortcuts);
+
+Vue.use(VueQuillEditor, 
+  {
+    modules: {  
+      markdownShortcuts: {}
+    }
+  }
+  )
+
 Vue.mixin({
   mixins: [channelMixin, commonMixin, messageMixin]
 })
