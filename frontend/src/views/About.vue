@@ -32,17 +32,17 @@
         </div>
       </quill-editor>
 
-      <button @click = "click">click</button>
+      <!-- <button @click = "click">click</button>
       <div class="ql-editor" v-html="quillContent">
 
-      </div>
+      </div> -->
   </div>
 </template>
 
 <script>
 
 import { quillEditor } from 'vue-quill-editor'
-
+import CommonClass from '../service/common'
   export default {
     name: 'About',
     components: {
@@ -55,10 +55,39 @@ import { quillEditor } from 'vue-quill-editor'
     computed: {},
     data() {
       return {
+        bindings :{
+          custom: {
+            key: 13,
+            shiftKey: true,
+            handler: function(range, context) {
+              console.log(range,'range')
+              console.log(context,'context')
+            }
+          }
+        },
+        
        quillContent:'',
        editorOption: {
           modules: {
-            toolbar: '#toolbar',
+            keyboard: {
+              bindings:{
+                custom: {
+                  key: 13,
+                  name:'my',
+                  handler: function(range, context) {
+                    console.log(range)
+                    console.log(context)
+                  }
+                }
+              }
+            },
+            toolbar: [
+              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+              ['bold', 'italic', 'underline', 'strike'],
+               [{ 'color': [] }, { 'background': [] }],  
+               [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['clean']    
+              ],
             markdownShortcuts: {}
           }
         }
@@ -67,7 +96,7 @@ import { quillEditor } from 'vue-quill-editor'
     methods: {
       click:function(){
         console.log(this.quillContent)
-        
+        console.log(CommonClass.byteCount(this.quillContent))
         // var delta = .getContents();
         // console.log(delta);
       }
@@ -76,7 +105,7 @@ import { quillEditor } from 'vue-quill-editor'
 
 </script>
 <style scoped>
-.ql-custom-button {
-        width: 100px;
-      }
+  .ql-custom-button {
+    width: 100px;
+  }
 </style>

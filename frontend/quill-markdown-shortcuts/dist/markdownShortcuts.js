@@ -136,7 +136,6 @@ _quill2.default.register('formats/horizontal', _hr2.default);
 var MarkdownShortcuts = function () {
   function MarkdownShortcuts(quill, options) {
     var _this = this;
-
     _classCallCheck(this, MarkdownShortcuts);
 
     this.quill = quill;
@@ -344,6 +343,9 @@ var MarkdownShortcuts = function () {
         }
       }
     });
+
+    console.log(this.quill.keyboard)
+
   }
 
   _createClass(MarkdownShortcuts, [{
@@ -399,9 +401,14 @@ var MarkdownShortcuts = function () {
   }, {
     key: 'onEnter',
     value: function onEnter() {
+      // let data = this.quill.getContents().ops[0].insert.replace(/\n/g, '');
+      // if(data !== ''){
+      //   console.log(document.getElementsByClassName('ql-editor')[0].innerHTML);
+      //   this.quill.setContents([  { insert: '' }]);
+      // }
+
       var selection = this.quill.getSelection();
       if (!selection) return;
-
       var _quill$getLine3 = this.quill.getLine(selection.index),
           _quill$getLine4 = _slicedToArray(_quill$getLine3, 2),
           line = _quill$getLine4[0],
