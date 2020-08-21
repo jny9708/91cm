@@ -23,7 +23,7 @@
 
               <div class="cetered-align myflex-column" >
                 <v-img
-                  style="border-radius: 5%;"
+                  style="border-radius: 50%;"
                   :src="relatedUser!=null ? relatedUser.picture : getCurrentUser.picture" width="200" height="200"
                 ></v-img>
                 <h4 style="margin: 20px 0px 20px 0;" >
