@@ -96,6 +96,12 @@ export default {
     state.fileCursorPoint.first = true
     state.fileCursorPoint.cursorId = 0
     state.fileCursorPoint.empty = false
+  },
+  initCursorPoint:function(state,payload){
+    state.cursorPoint.channel_id = payload
+    state.cursorPoint.first= true
+    state.cursorPoint.cursorId = 0
+    state.cursorPoint.empty = false 
   }
 
 }

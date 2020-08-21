@@ -59,10 +59,7 @@ let messageMixin = {
       this.$store.state.isSearchMode = false
       this.commit('setMsgArray', [])
       this.message.channel_id = channel.id
-      this.cursorPoint.channel_id = channel.id
-      this.cursorPoint.first = true
-      this.cursorPoint.cursorId = 0
-      this.cursorPoint.empty = false
+      this.$store.commit('initCursorPoint',channel.id)
       this.$store.commit('setIsGetMsgForImgLoad',false)
       this.$store.commit('setIsGetMsgForPreview',false)
       this.$store.commit('setScrollPosition',0)
