@@ -1,6 +1,6 @@
 <template>
   <main class="mainwrapper" style="height: calc(100vh - 91px);">
-    <div class="h-inherit" v-cloak @drop.prevent="dropFile" @dragover.prevent>
+    <div class="h-inherit" v-cloak @drop.prevent="dropFile" @dragover.prevent style="display: flex;flex-direction: column;">
       <ul class="c-c-wrapper list-unstyled" @scroll="scrollEvt">
         <div v-for="msg in msgArray" :key="msg.id">
           <MsgBox v-if="msg.message_type=='message'|| msg.message_type=='file' || msg.message_type == 'translate'" :msg="msg"
@@ -24,37 +24,13 @@
           </div>
         </div>
       </a>
-      <v-row align="center" justify="center" class="c-i-wrapper" v-if="!isRoot()">
+      <v-row align="center" justify="center" class="c-i-wrapper" v-if="!isRoot()" style="flex-grow: 1;">
         <div class="myflex-column myflex-grow">
           <div style="position: relative;display: flex;">
             <div class="mytextarea-wrapper" v-if="!$store.state.isInviteMode && !$store.state.isSearchMode">
-              <div>
-                <v-icon class="icon-list" style="right: 130px;" v-bind:class="{'active-m': translate}"
-                        @click="translateToggle">translate
-                </v-icon>
-                <v-icon class="icon-list" style="right: 100px;" v-bind:class="{'active-m': sendMail}"
-                        @click="sendMailToggle">mail
-                </v-icon>
-                <v-icon class="icon-list" style="right: 70px;" @click="toggleSearchMode">find_in_page</v-icon>
-                <i class="icon-list im im-users" style="right: 40px;" @click="inviteToggle"></i>
-                <label for="file-input" style="display: block;margin-bottom: 0;">
-                  <i class="im im-cloud-upload icon-list" style="right: 10px;"></i>
-                </label>
-                <input id="file-input" type="file" ref="fileInput" multiple @change="attachFile" hidden/>
-              </div>
-              <b-form-textarea
-                class="mytextarea"
-                autofocus
-                id="textarea-no-resize"
-                placeholder="Enter chat message"
-                rows="2"
-                no-resize
-                v-model="message.content"
-                @keydown.ctrl.shift.70="toggleSearchMode"
-                @keydown.enter.exact="sendMessage($event)"
-                @keyup="byteCheck"
-                @keydown.shift.alt.50='inviteToggle'
-              ></b-form-textarea>
+            
+              <About @inviteToggle="inviteToggle"
+              @addFile="addFile"></About>
             </div>
             <!--  초대 모드 시작 -->
             <InviteInput @sendMessage="sendMessage" @inviteToggle="inviteToggle"
@@ -102,12 +78,12 @@
   import CommonClass from '../../service/common'
   import SearchInput from './SearchInput'
   import InviteInput from "../../components/InviteInput";
-
+  import About from '../About'
   export default {
     name: 'ContentWrapper',
     components: {
       InviteInput,
-      MsgBox, SearchInput
+      MsgBox, SearchInput,About
     },
     data() {
       return {
@@ -146,12 +122,7 @@
       this.$store.state.isSearchMode = false
     },
     methods: {
-      translateToggle: function () {
-        this.translate = !this.translate
-        if (this.translate) {
-          this.$_alert('지금부터 보내는 메시지는 번역 내용과 같이 보내집니다.')
-        }
-      },
+
       imgLoad(e) {
         this.$store.state.oldScrollHeight = this.wrapperEl.scrollHeight
         // 스크롤을 올리고 있을 때 이미지가 로드되어서 스크롤이 강제로 하단으로 가는 문제를 해결하기 위해 isUpScroll를 사용함.
@@ -173,12 +144,6 @@
       inviteDataInit: function () {
         this.message.content = ''
         this.$store.state.isInviteMode = !this.$store.state.isInviteMode
-      },
-      sendMailToggle() {
-        this.sendMail = !this.sendMail
-        if (this.sendMail) {
-          this.$_alert('지금부터 보내는 메시지는' + this.$store.state.currentChannel.name + ' 채널 사용자들에게 ' + '메일로 보내집니다.')
-        }
       },
       toggleSearchMode: function () {
         this.$store.state.isSearchMode = !this.$store.state.isSearchMode

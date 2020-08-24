@@ -137,6 +137,8 @@ let messageMixin = {
     },
     //채널 메시지 전송
     sendMessage: async function (e, isSysMsg) {
+      console.log('send msg')
+      console.log(this.message.content)
       if (e != null) {
         e.preventDefault()
       }

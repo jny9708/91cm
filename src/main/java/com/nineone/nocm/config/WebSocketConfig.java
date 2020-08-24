@@ -29,14 +29,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 		config.setApplicationDestinationPrefixes("/pub/");
 	}
 
-	@Override
-	public boolean configureMessageConverters(List<MessageConverter> messageConverters) {
-		MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-		ObjectMapper copy = new ObjectMapper();
-        copy.getFactory().setCharacterEscapes(new HtmlCharacterEscapes());
-		converter.setObjectMapper(copy);
-		messageConverters.add(converter);
-		return false;
-	}
+//	@Override
+//	public boolean configureMessageConverters(List<MessageConverter> messageConverters) {
+//		MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+//		ObjectMapper copy = new ObjectMapper();
+//        copy.getFactory().setCharacterEscapes(new HtmlCharacterEscapes());
+//		converter.setObjectMapper(copy);
+//		messageConverters.add(converter);
+//		return false;
+//	}
 	
 }

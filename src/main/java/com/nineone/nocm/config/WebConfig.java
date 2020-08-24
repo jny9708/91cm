@@ -27,12 +27,12 @@ public class WebConfig implements WebMvcConfigurer {
         resolvers.add(userArgumentResolver);
     }
 
-    @Bean
-    public MappingJackson2HttpMessageConverter jsonEscapeConverter() {
-        ObjectMapper copy = new ObjectMapper();
-        copy.getFactory().setCharacterEscapes(new HtmlCharacterEscapes());
-        return new MappingJackson2HttpMessageConverter(copy);
-    }
+//    @Bean
+//    public MappingJackson2HttpMessageConverter jsonEscapeConverter() {
+//        ObjectMapper copy = new ObjectMapper();
+//        copy.getFactory().setCharacterEscapes(new HtmlCharacterEscapes());
+//        return new MappingJackson2HttpMessageConverter(copy);
+//    }
 
     @Bean
     public RestTemplate restTemplate(){
