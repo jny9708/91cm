@@ -30,7 +30,8 @@
             <div class="mytextarea-wrapper" v-if="!$store.state.isInviteMode && !$store.state.isSearchMode">
             
               <About @inviteToggle="inviteToggle"
-              @addFile="addFile"></About>
+              @addFile="addFile"
+              @scrollToEnd="scrollToEnd"></About>
             </div>
             <!--  초대 모드 시작 -->
             <InviteInput @sendMessage="sendMessage" @inviteToggle="inviteToggle"

@@ -1,7 +1,6 @@
 <template>
   <div>
       <quill-editor 
-      v-model="quillContent"
       :options="editorOption"
       ref="myQuillEditor"
       >
@@ -88,7 +87,6 @@ import CommonClass from '../service/common'
       this.editorOption.modules.keyboard.bindings.simpleEnter.handler = this.simpleEnterHandler;
       this.editorOption.modules.keyboard.bindings.searchModeKey.handler = this.searchModeKeyHandler
       this.editorOption.modules.keyboard.bindings.inviteModeKey.handler = this.inviteModeKeyHandler
-      console.log(this.editorOption)
     },
     mounted() {
     },
@@ -96,18 +94,6 @@ import CommonClass from '../service/common'
     data() {
       return {
         menu:false,
-        bindings :{
-          custom: {
-            key: 13,
-            shiftKey: true,
-            handler: function(range, context) {
-              console.log(range,'range')
-              console.log(context,'context')
-            }
-          }
-        },
-        
-       quillContent:'',
        editorOption: {
           modules: {
             keyboard: {
@@ -128,7 +114,8 @@ import CommonClass from '../service/common'
                   shiftKey: true,
                   altKey: true,
                   handler: null
-                }
+                },
+                
 
               }
             },
@@ -140,13 +127,19 @@ import CommonClass from '../service/common'
     },
     methods: {
       simpleEnterHandler:function(range, context){   
-        let el = document.getElementsByClassName("ql-editor")[0]
+        
+        let el = document.getElementsByClassName("quill-editor")[0].getElementsByClassName("ql-editor")[0] 
+        
+        console.log(el);
         if(!el.innerText.trim() == ''){
           this.message.content = el.innerHTML
           this.sendMessage()
           this.$refs.myQuillEditor.quill.setContents([])
         }
         
+      },
+      scrollToEnd:function(bool){
+        this.$emit('scrollToEnd',bool);
       },
       searchModeKeyHandler:function(range,context){
         this.$store.state.isSearchMode = !this.$store.state.isSearchMode
@@ -177,6 +170,7 @@ import CommonClass from '../service/common'
 
 </script>
 <style scoped>
+  
   .ql-custom-button {
     width: 100px;
   }
@@ -184,6 +178,7 @@ import CommonClass from '../service/common'
 </style>
 
 <style>
+
   .ql-container{
     max-height: 101px !important;
     overflow: auto !important;
@@ -198,5 +193,11 @@ import CommonClass from '../service/common'
   .icon-list{
     color: #2C3E50 !important;
   }
+  
+
+  .ql-snow .ql-editor pre{
+    font-family: Monaco,Menlo,Consolas,Courier New,monospace!important;
+  }
+
 </style>
 

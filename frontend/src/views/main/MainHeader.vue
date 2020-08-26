@@ -137,12 +137,7 @@
   }
 </script>
 
-<style>
-a.dropdown-item{
-  color:#212529 !important;
-}
 
-</style>
 
 <style scoped>
 

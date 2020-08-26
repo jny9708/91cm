@@ -21,12 +21,14 @@ import {getGlobalMsg} from './json/msg.js'
 </script>
 
 <style>
+
 /* a {
     color:#212121 !important;
   } */
 </style>
 
 <style lang="scss" scoped>
+  
 
   #app {
     // font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -46,6 +48,11 @@ import {getGlobalMsg} from './json/msg.js'
   }
 
   
+  .v-application {
+    ::v-deep a{
+      color:#212529
+    }
+  }
 
   #nav {
     padding: 30px;

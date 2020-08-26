@@ -144,20 +144,22 @@ var MarkdownShortcuts = function () {
 
     this.ignoreTags = ['PRE'];
 
-    var elements = [{
-      name: 'header',
-      pattern: /^(#){1,6}\s/g,
-      action: function action(text, selection, pattern) {
-        var match = pattern.exec(text);
-        if (!match) return;
-        var size = match[0].length;
-        // Need to defer this action https://github.com/quilljs/quill/issues/1134
-        setTimeout(function () {
-          _this.quill.formatLine(selection.index, 0, 'header', size - 1);
-          _this.quill.deleteText(selection.index - size, size);
-        }, 0);
-      }
-    }, {
+    var elements = [
+    //   {
+    //   name: 'header',
+    //   pattern: /^(#){1,6}\s/g,
+    //   action: function action(text, selection, pattern) {
+    //     var match = pattern.exec(text);
+    //     if (!match) return;
+    //     var size = match[0].length;
+    //     // Need to defer this action https://github.com/quilljs/quill/issues/1134
+    //     setTimeout(function () {
+    //       _this.quill.formatLine(selection.index, 0, 'header', size - 1);
+    //       _this.quill.deleteText(selection.index - size, size);
+    //     }, 0);
+    //   }
+    // },
+     {
       name: 'blockquote',
       pattern: /^(>)\s/g,
       action: function action(text, selection) {
@@ -344,8 +346,6 @@ var MarkdownShortcuts = function () {
       }
     });
 
-    console.log(this.quill.keyboard)
-
   }
 
   _createClass(MarkdownShortcuts, [{
@@ -401,12 +401,6 @@ var MarkdownShortcuts = function () {
   }, {
     key: 'onEnter',
     value: function onEnter() {
-      // let data = this.quill.getContents().ops[0].insert.replace(/\n/g, '');
-      // if(data !== ''){
-      //   console.log(document.getElementsByClassName('ql-editor')[0].innerHTML);
-      //   this.quill.setContents([  { insert: '' }]);
-      // }
-
       var selection = this.quill.getSelection();
       if (!selection) return;
       var _quill$getLine3 = this.quill.getLine(selection.index),

@@ -1,17 +1,11 @@
 package com.nineone.nocm.config;
 
-import java.util.List;
-
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.converter.MappingJackson2MessageConverter;
-import org.springframework.messaging.converter.MessageConverter;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nineone.nocm.xss.HtmlCharacterEscapes;
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -28,6 +22,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 		config.enableSimpleBroker("/sub");
 		config.setApplicationDestinationPrefixes("/pub/");
 	}
+
+	// 인터셉터....
+//	@Override
+//	public void configureClientInboundChannel(ChannelRegistration registration) { 
+//		registration.interceptors(new WebSocketInterceptor());
+//		
+//	}
+
+
 
 //	@Override
 //	public boolean configureMessageConverters(List<MessageConverter> messageConverters) {
