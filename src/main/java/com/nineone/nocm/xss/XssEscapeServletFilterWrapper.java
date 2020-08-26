@@ -21,11 +21,12 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.navercorp.lucy.security.xss.servletfilter.XssEscapeFilter;
 
-
+// json도 xss filter 적용 되게끔 구현 참고 : https://github.com/kimyoon21/lucy-xss-servlet-filter
+// Gson int형이 double형으로 강제 캐스팅되는 문제 해결 참고 : https://minaminaworld.tistory.com/102
 
 public class XssEscapeServletFilterWrapper extends HttpServletRequestWrapper{
 	
-	
+ 
 	private XssEscapeFilter xssEscapeFilter;
 	private String path;
 //	private Gson gson = new Gson();

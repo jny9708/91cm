@@ -105,7 +105,8 @@ foreign key (tasklist_id) references tasklist(id) on delete cascade on update ca
 );
 create table roles (
 authority varchar(50) not null primary key,
-description varchar(100)
+description varchar(100),
+level int DEFAULT NULL,
 );
 
 create table authorities (
@@ -116,9 +117,15 @@ foreign key (member_email) references member(email) on delete cascade on update 
 foreign key (roles_authority) references roles(authority) on delete cascade on update cascade
 );
 
-INSERT INTO ROLES (authority, description) values('ROLE_ROOT', '최고관리자');
-insert roles (authority, description) values ('ROLE_ADMIN', '관리자');
-insert roles (authority, description) values ('ROLE_USER', '일반 사용자');
-insert roles (authority, description) values ('ROLE_ANON', '제한된 사용자');
+INSERT INTO ROLES (authority, description,level) values('ROLE_ROOT', '최고관리자','0');
+insert roles (authority, description,level) values ('ROLE_ADMIN', '관리자','1');
+insert roles (authority, description,level) values ('ROLE_USER', '일반 사용자','2');
+insert roles (authority, description,level) values ('ROLE_ANON', '제한된 사용자','3');
 
 insert authorities (member_email, roles_authority) values ('user이름','ROLE_ADMIN');
+
+--최고관리자 추가  id: root ,pwd : root
+insert into member(email,password,name,phone) values('root', '$2a$10$AKHbu88WV6ax.50ztWxSGe04.o7xVbkFTgcjDXBe/vuKA5V9zKsjS', '최고관리자', '010-0000-0000')
+
+--최고관리자 권한 추가
+INSERT INTO AUTHORITIES (member_email, roles_authority) values ('root', 'ROLE_ROOT');
