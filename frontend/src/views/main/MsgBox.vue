@@ -15,16 +15,16 @@
             </slot>
           </div>
           <!-- 채팅메세지내용 -->
-          <div class="myflex">
+          <div class="myflex ql-snow">
             <slot name="m-content">
               <div v-if="checkMsgType"
-                   class="mychat-content"
+                   class="mychat-content ql-editor"
                    v-html="textbyFilter(msg.content)">
                    
                 <!-- <pre v-html="textbyFilter(msg.content)"></pre> -->
               </div>
-              <div style="display:flex;align-items: flex-end;" class="ql-snow">
-                <div v-if="checkFileType" class="mychat-content ql-editor">
+              <div style="display:flex;align-items: flex-end;">
+                <div v-if="checkFileType" class="mychat-content">
                   <b-row>
                     <b-col v-for="(file,index) in msg.files" :key="index">
                       <a @click="fileDownload(file)">

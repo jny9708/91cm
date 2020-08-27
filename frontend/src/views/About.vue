@@ -127,10 +127,7 @@ import CommonClass from '../service/common'
     },
     methods: {
       simpleEnterHandler:function(range, context){   
-        
         let el = document.getElementsByClassName("quill-editor")[0].getElementsByClassName("ql-editor")[0] 
-        
-        console.log(el);
         if(!el.innerText.trim() == ''){
           this.message.content = el.innerHTML
           this.sendMessage()
@@ -187,9 +184,9 @@ import CommonClass from '../service/common'
     padding:5px;
     cursor:pointer;
   }
-   .active-m{
-     color: #FF4848 !important;
-   }
+  .active-m{
+    color: #FF4848 !important;
+  }
   .icon-list{
     color: #2C3E50 !important;
   }
