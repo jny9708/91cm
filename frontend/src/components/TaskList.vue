@@ -8,7 +8,7 @@
       >
         <div class="card-header">
           <div v-if="!edit">
-            <h3>{{taskList.name}}</h3>
+            <h3 v-html="taskList.name"></h3>
             <div class="card-header-right">
               <ul class="list-unstyled card-option">
                 <!-- <i class="ik ik-chevron-up"></i> -->
@@ -26,9 +26,9 @@
               @keydown.esc="editToggle"
               v-model="editTaskListNameVal"
               autofocus></b-form-input>
-            <li class="list-unstyled" @click="editToggle"><i class="ik ik-x close-card" style="cursor: pointer;"></i>
+            <li class="list-unstyled" @click="editToggle"><i class="ik ik-x close-card mypointer"></i>
             </li>
-            <li class="list-unstyled" @click="editTaskListName"><i class="ik ik-plus" style="cursor: pointer;"></i></li>
+            <li class="list-unstyled" @click="editTaskListName"><i class="ik ik-plus mypointer"></i></li>
           </template>
         </div>
       </draggable>
@@ -38,9 +38,9 @@
 
         <b-form-input placeholder="내용을 입력해주세요" v-model="taskListName" autofocus @keydown.enter.exact="setTaskListName"
                       @keydown.esc="closeTaskList"></b-form-input>
-        <li class="list-unstyled" @click="closeTaskList"><i class="ik ik-x close-card" style="cursor: pointer;"></i>
+        <li class="list-unstyled" @click="closeTaskList"><i class="ik ik-x close-card mypointer"></i>
         </li>
-        <li class="list-unstyled" @click="setTaskListName"><i class="ik ik-plus" style="cursor: pointer;"></i></li>
+        <li class="list-unstyled" @click="setTaskListName"><i class="ik ik-plus mypointer"></i></li>
       </div>
     </div>
 
@@ -80,7 +80,7 @@
 
                 </div>
 
-                <p id="content" style="margin:0">{{task.content}}</p>
+                <p id="content" style="margin:0" v-html="task.content"></p>
                 <footer style="display: flex;justify-content: flex-end;">
                   <small>created by {{channelUsers.find(user => user.email ==
                     task.member_email).name}}</small>
