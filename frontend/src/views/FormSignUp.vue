@@ -17,8 +17,8 @@
       </div>
 
       <!-- Registeration Form -->
-      <div class="col-md-7 col-lg-6 ml-auto margincustom">
-          <div class="row mycustom">
+      <div class="col-md-7 col-lg-6 ml-auto">
+          <div class="row">
             <input type ="hidden" name="_csrf" :value="csrfToken"/>
             <!-- Email -->
             <div class="input-group col-lg-12">
@@ -241,22 +241,22 @@
     margin: 10px;
   }
 
-  .mycustom {
+  /* .mycustom {
     margin-bottom: 0px;
-  }
+  } */
 
   .margincustom {
     margin-top: 120px;
   }
 
   @media (max-width: 768px) {
-    .mycustom {
+    /* .mycustom {
       margin-bottom: 188px;
-    }
+    } */
 
-    .margincustom {
+    /* .margincustom {
       margin-top: 80px;
-    }
+    } */
   }
 
   /*

@@ -98,7 +98,7 @@ const routes = [
 
   },
   {
-    path: '/formSignUp',
+    path: '/formsignup',
     component: FormSignUp
   },
   {
