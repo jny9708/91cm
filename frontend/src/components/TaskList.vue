@@ -244,6 +244,7 @@
         })
       },
       editTask: function (task, state) {
+        console.log(task,'task!!')
         task.state = state
         this.$http.post('/api/task/update/content', task)
           .then(res => {

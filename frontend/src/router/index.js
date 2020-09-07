@@ -8,6 +8,7 @@ import Main from '../components/Main'
 import SignUp from '../components/SignUp'
 import FormSignUp from "../views/FormSignUp";
 import Todolist from '../views/todolist/TodoList'
+import TaskModal from '../views/todolist/taskmodal/TaskModal'
 import About from "../views/About";
 import DevelopView from "../views/util/DevelopView";
 import VideoChat from "../components/VideoChat";
@@ -58,7 +59,7 @@ const routes = [
   {
     path: '/about',
     name: 'mains',
-    component: About
+    component: TaskModal
   },
   {
     path: '*',

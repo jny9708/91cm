@@ -1,0 +1,216 @@
+@import "@/assets/css/common.scss";
+.grow-end{
+    @extend .myflex;
+    @extend .myflex-grow;
+    @extend .msgflex-end;
+}
+
+::v-deep .v-tabs-slider-wrapper{
+  transition:none;
+}
+
+.task-title-editor{
+  border: 2px solid rgb(153, 222, 222);
+  border-radius: 5px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  width:100%;
+}
+
+.v-icon.v-icon.task-title-icon-pen{
+  display:flex;
+  align-items: flex-start;
+  font-size: 20px;
+  margin-top: 5px;
+  visibility: hidden;
+}
+
+.task-title-content{
+    flex-grow: 1;
+    word-break: break-all;
+}
+.task-title-pannel{
+  @extend .myflex;
+  
+  h4{
+    margin:0px;
+  }
+  .v-icon.v-icon.task-title-icon-pen{
+    display:flex;
+    align-items: flex-start;
+    font-size: 20px;
+    margin-top: 5px;
+    visibility: hidden;
+  }
+  &:hover{
+    cursor: pointer;
+    // background-color: #e6e8ec;
+    // border-radius: 6px;    
+    @extend .back-color;
+
+    .v-icon.v-icon.task-title-icon-pen{
+        visibility: visible;
+    }
+  }
+}
+
+.v-dialog--scrollable>.v-card .v-card__text{
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+
+.task-title-editor{
+    border: 2px solid rgb(153, 222, 222);
+    border-radius: 5px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    width:100%;
+}
+
+
+    .task-title-pannel{
+    @extend .myflex;
+    
+    h4{
+        margin:0px;
+    }
+    }
+    .task-title-pannel:hover{
+    cursor: pointer;
+    // background-color: #e6e8ec;
+    // border-radius: 6px;
+    @extend .back-color;
+    }
+
+    .task-desc-editor-footer{
+        display:flex;
+        justify-content: flex-end;
+        border-bottom: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        padding: 6px;
+    }
+
+    .task-add-button{
+        background-color: #e6e8ec;
+        border-radius: 5px;
+        &:hover{
+            background-color: #00bcd4;
+            .v-icon.task-icon-add{
+                color:white;            
+            }
+        }
+        
+    }
+
+
+    .task-add-button .v-icon.task-icon-add{
+        padding: 3px;
+        font-size: 20px;
+    }
+
+    .task-attribute-container{
+        margin:12px 0px;
+        .v-chip{
+            cursor: pointer;
+            &:hover{
+                background-color: #00bcd4 !important;
+                .v-chip__content{
+                    color:white;
+                }
+            }
+        }
+    }
+
+    .task-attribute-title{
+        margin: 5px 0px;
+    }
+    .task-attribute-icon{
+        margin-right:5px;
+    }
+
+    .loca-title-wrap{
+        padding:10px 16px;
+        border-bottom: 1px solid #e0e0e0;
+        &.loca-title, .loca-title{
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
+
+
+
+    .loca-btn-wrapper{
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        padding: 10px 10px 10px 15px;
+        cursor: pointer;
+        display: flex;
+        margin-bottom: 10px;
+        &:nth-last-child(1){
+            margin-bottom: 0px;
+        }
+        &:hover{
+            background-color: #e6e8ec;
+        }
+    }
+
+    .loca-btn-content{
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        & span:nth-child(2){
+            font-weight: 600;
+            color: #14899D;
+            word-break: break-all;
+        }
+    }
+
+    .popup-btn-wrapper{
+        display: flex;
+        justify-content: flex-end;
+        padding-bottom: 10px;
+    }
+
+    .back-color{
+        background-color: #e6e8ec;
+        border-radius: 6px;
+    }
+
+    .theme--light.v-card>.v-card__text.loca-card-text{
+        max-height: 200px;
+        overflow: auto;
+    }
+    .loca-list-item-wrap{
+        display: flex;
+        color: #464c59;
+        padding: 5px;
+        cursor: pointer;
+        margin-bottom: 5px;
+        span{
+            word-break: break-all;
+        }
+        .v-icon.v-icon{
+            visibility: hidden;
+        }
+        &.select span{
+            color:#14899D;
+        }
+        &.select .v-icon.v-icon{
+            visibility: visible;
+        }
+        &.select{
+            @extend .back-color;
+        }
+        &:hover{
+            @extend .back-color;
+        }
+        &:nth-last-child(1){
+            margin-bottom:0px;
+        }
+        
+    }    
