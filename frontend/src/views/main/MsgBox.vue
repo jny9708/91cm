@@ -15,11 +15,13 @@
             </slot>
           </div>
           <!-- 채팅메세지내용 -->
-          <div class="myflex">
+          <div class="myflex ql-snow">
             <slot name="m-content">
               <div v-if="checkMsgType"
-                   class="mychat-content">
-                <pre v-html="textbyFilter(msg.content)"></pre>
+                   class="mychat-content ql-editor"
+                   v-html="textbyFilter(msg.content)">
+                   
+                <!-- <pre v-html="textbyFilter(msg.content)"></pre> -->
               </div>
               <div style="display:flex;align-items: flex-end;">
                 <div v-if="checkFileType" class="mychat-content">
@@ -77,9 +79,10 @@
               </a>
               <span style="font-size: 11px; margin:0px 3px; width:53px; ">{{ msg.str_send_date }}</span>
             </div>
-
-            <div v-if="checkMsgType" class="my-message mychat-content">
-              <pre v-html="textbyFilter(msg.content)"></pre>
+            <div class=" ql-snow">
+              <div v-if="checkMsgType" class="my-message mychat-content ql-editor" v-html="textbyFilter(msg.content)">
+                <!-- <pre v-html="textbyFilter(msg.content)"></pre> -->
+              </div>
             </div>
             <div v-if="checkFileType" class="my-message mychat-content">
               <b-row>

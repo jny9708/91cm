@@ -108,6 +108,12 @@ export default {
   },
   setModalTrigger: function (state,payload) {
     state.modalTrigger = payload
+  },
+  initCursorPoint:function(state,payload){
+    state.cursorPoint.channel_id = payload
+    state.cursorPoint.first= true
+    state.cursorPoint.cursorId = 0
+    state.cursorPoint.empty = false 
   }
 
 }

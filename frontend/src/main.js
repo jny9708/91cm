@@ -25,11 +25,29 @@ import commonMixin from './mixins/commonMixin'
 import messageMixin from './mixins/messageMixin'
 import moment from "moment";
 
+// import 'quill/dist/quill.core.css'
+import './assets/css/cus-quill.core.css'
+import 'quill/dist/quill.snow.css'
+import Quill from 'quill';
+import VueQuillEditor from 'vue-quill-editor'
+
+import MarkdownShortcuts from '../quill-markdown-shortcuts'
+
+Quill.register('modules/markdownShortcuts', MarkdownShortcuts);
+
+Vue.use(VueQuillEditor, 
+  {
+    modules: {  
+      markdownShortcuts: {}
+    }
+  }
+  )
+
 Vue.mixin({
   mixins: [channelMixin, commonMixin, messageMixin]
 })
 
-
+Vue.use(Vuetify)
 Vue.use(BootstrapVue)
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
@@ -38,7 +56,7 @@ Date.prototype.addDays = function (days) {
 }
 Vue.use(moment)
 Vue.use(AlertModal)
-Vue.use(Vuetify)
+
 Vue.use(VueSession, {persist: true})
 Vue.prototype.$eventBus = new Vue();
 Vue.prototype.$http = axios

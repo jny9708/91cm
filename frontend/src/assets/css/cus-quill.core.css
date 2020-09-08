@@ -1,0 +1,7 @@
+@import '~quill/dist/quill.snow.css';
+
+.ql-snow .ql-editor pre.ql-syntax{
+    background-color:#f0f0f0;
+    color:#23241f;
+
+  }

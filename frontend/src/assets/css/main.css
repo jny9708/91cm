@@ -54,32 +54,8 @@
 .theme--light.v-icon:focus:after {
     opacity: 0 !important;
 }
-.mytextarea-wrapper .active-m{
-    color: #FF4848 !important;
-}
-.mytextarea-wrapper .icon-list{
-    position: absolute !important;
-    z-index: 1;
-    bottom: 5px;
-    cursor: pointer;
-    color: #2C3E50;
-}
-.mytextarea-wrapper .my-search{
-    position: absolute !important;
-    z-index: 1;
-    bottom: 5px;
-    cursor: pointer;
-    right: 85px;
-    color: #2C3E50;
-}
-.mytextarea-wrapper .my-mail{
-    position: absolute !important;
-    z-index: 1;
-    bottom: 5px;
-    cursor: pointer;
-    right: 115px;
-    color: #2C3E50;
-}
+
+
 .list-inline, .list-unstyled{
     padding-left: 0 !important;
     list-style: none;
@@ -105,10 +81,10 @@
 }
 
 .mytextarea-wrapper{
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    background-color: #fff;
-    padding-bottom: 30px;
+    /* border: 1px solid #ced4da;
+    border-radius: .25rem;*/
+    background-color: #fff; 
+    /* padding-bottom: 30px; */
     width:100%;
     position: relative;
 }
@@ -329,7 +305,7 @@ MainContents
 }
 
 .c-i-wrapper {
-    height: 110px;
+    /* height: 110px; */
     padding: 0px 25px;
     display: flex;
     /* border-top: 1px solid #e6e6e6; */

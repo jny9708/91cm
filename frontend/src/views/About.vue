@@ -1,56 +1,200 @@
 <template>
-  <v-container @wheel="test">
-    <v-row align="center" justify="center" style="max-height: 100%" ref="row">
-      <v-col cols="12">
-        <v-card>
-          <v-card-title>{{list[index]}}</v-card-title>
-          <v-card-text>1111111111111111111111111111111</v-card-text>
-          <v-img :src="images[index]" max-height="40vh" contain></v-img>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+  <div>
+      <quill-editor 
+      :options="editorOption"
+      ref="myQuillEditor"
+      >
+        <!-- <quill-editor > -->
+        <div id="toolbar" slot="toolbar" class="verti-align">
+          <span class="ql-formats">          
+            <button class="ql-bold"></button>
+            <button class="ql-italic"></button>
+            <button class="ql-underline"></button>
+            <button class="ql-link"></button>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-list" value="ordered"></button>
+            <button class="ql-list" value="bullet"></button>
+          </span>
+
+          <span class="ql-formats">
+            <button class="ql-clean"></button>
+          </span>
+
+          <v-menu
+            v-model="menu"
+            :close-on-content-click="false"
+            :nudge-width="200"
+            offset-x
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <span  v-bind="attrs"
+                v-on="on" style="cursor:pointer; display:inline-block;" class="dropdown-toggle" href="#" id="moreDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-horizontal"></i></span>
+            </template>
+
+            <v-card>
+              <v-list style="padding:0px;">
+                
+                <v-list-item style="display: flex;flex-wrap: wrap;">
+
+                  <label for="file-input" style="display: flex;margin-bottom: 0;">
+                  <div class="toolbar-menu-icon">
+                      <v-icon color="#2C3E50" >note_add</v-icon>
+                  </div>
+                  </label>
+                  <input id="file-input" type="file" ref="fileInput" multiple @change="attachFile"  hidden/>
+                  
+                  <div class="toolbar-menu-icon">
+                    <v-icon color="#2C3E50" @click="searchModeKeyHandler" >search</v-icon>
+                  </div>
+
+                  <div class="toolbar-menu-icon">
+                  <v-icon color="#2C3E50"  @click="inviteModeKeyHandler" >people_alt</v-icon>
+                  </div>
+
+                  <div class="toolbar-menu-icon">
+                  <v-icon color="#2C3E50" v-bind:class="{'active-m': sendMail}"
+                        @click="sendMailToggle" >mail</v-icon>
+                  </div>
+                  
+                  <div class="toolbar-menu-icon">
+                  <v-icon color="#2C3E50" v-bind:class="{'active-m': translate}" @click="translateToggle">translate</v-icon>
+                  </div>
+
+                
+                  
+                </v-list-item>
+              </v-list>
+            </v-card>
+          </v-menu>
+        </div>
+      </quill-editor>
+
+  </div>
 </template>
+
 <script>
+
+import { quillEditor } from 'vue-quill-editor'
+import CommonClass from '../service/common'
   export default {
     name: 'About',
+    components: {
+      quillEditor
+    },
     created() {
+      this.editorOption.modules.keyboard.bindings.simpleEnter.handler = this.simpleEnterHandler;
+      this.editorOption.modules.keyboard.bindings.searchModeKey.handler = this.searchModeKeyHandler
+      this.editorOption.modules.keyboard.bindings.inviteModeKey.handler = this.inviteModeKeyHandler
     },
     mounted() {
     },
     computed: {},
     data() {
       return {
-        list: ['1','2','3'],
-        images:[
-          'https://images.squarespace-cdn.com/content/v1/5a5906400abd0406785519dd/1552662149940-G6MMFW3JC2J61UBPROJ5/ke17ZwdGBToddI8pDm48kLkXF2pIyv_F2eUT9F60jBl7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0iyqMbMesKd95J-X4EagrgU9L3Sa3U8cogeb0tjXbfawd0urKshkc5MgdBeJmALQKw/baelen.jpg?format=1500w',
-          'https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png',
-          'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg',
-        ],
-        index: 0,
+        menu:false,
+       editorOption: {
+          modules: {
+            keyboard: {
+              bindings:{
+                simpleEnter: {
+                  key: 13,
+                  name:'my',
+                  handler: null
+                },
+                searchModeKey:{
+                  key: 70,
+                  shiftKey: true,
+                  ctrlKey:true,
+                  handler: null
+                },
+                inviteModeKey:{
+                  key:50,
+                  shiftKey: true,
+                  altKey: true,
+                  handler: null
+                },
+                
+
+              }
+            },
+            toolbar: '#toolbar' ,
+            markdownShortcuts: {}
+          }
+        }
       };
     },
     methods: {
-      test:function (e){
-        this.$refs.row.classList.add('animate__animated','animate__fadeIn')
-        this.$refs.row.addEventListener('animationend', e=>{
-          this.$refs.row.classList.remove('animate__animated','animate__fadeIn')
-          this.$refs.row.removeEventListener('animationend', e=>{
-          })
-        })
-        this.index = this.values(e.deltaY)
-      },
-      values: function (val){
-        if (val > 0){
-          return (this.list.length <= this.index+1)? this.list.length-1 : this.index+1
-        }else{
-          return (0 > this.index-1)? 0 : this.index-1
+      simpleEnterHandler:function(range, context){   
+        let el = document.getElementsByClassName("quill-editor")[0].getElementsByClassName("ql-editor")[0] 
+        if(!el.innerText.trim() == ''){
+          this.message.content = el.innerHTML
+          this.sendMessage()
+          this.$refs.myQuillEditor.quill.setContents([])
         }
+        
+      },
+      scrollToEnd:function(bool){
+        this.$emit('scrollToEnd',bool);
+      },
+      searchModeKeyHandler:function(range,context){
+        this.$store.state.isSearchMode = !this.$store.state.isSearchMode
+        this.$store.state.isInviteMode = false
+      },
+      inviteModeKeyHandler:function(range,context){
+        this.$emit('inviteToggle');
+      },
+      translateToggle: function () {
+        this.translate = !this.translate
+        if (this.translate) {
+          this.$_alert('지금부터 보내는 메시지는 번역 내용과 같이 보내집니다.')
+        }
+      },
+       sendMailToggle() {
+        this.sendMail = !this.sendMail
+        if (this.sendMail) {
+          this.$_alert('지금부터 보내는 메시지는' + this.$store.state.currentChannel.name + ' 채널 사용자들에게 ' + '메일로 보내집니다.')
+        }
+      },
+      attachFile(e){
+        this.$emit('addFile',e.target.files);
+         this.$refs.fileInput.value = null
       }
-    },
+      
+    }
   }
 
 </script>
 <style scoped>
+  
+  .ql-custom-button {
+    width: 100px;
+  }
 
 </style>
+
+<style>
+
+  .ql-container{
+    max-height: 101px !important;
+    overflow: auto !important;
+  }
+  .toolbar-menu-icon{
+    padding:5px;
+    cursor:pointer;
+  }
+  .active-m{
+    color: #FF4848 !important;
+  }
+  .icon-list{
+    color: #2C3E50 !important;
+  }
+  
+
+  .ql-snow .ql-editor pre{
+    font-family: Monaco,Menlo,Consolas,Courier New,monospace!important;
+  }
+
+</style>
+

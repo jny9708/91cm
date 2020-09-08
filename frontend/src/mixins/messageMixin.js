@@ -59,10 +59,7 @@ let messageMixin = {
       this.$store.state.isSearchMode = false
       this.commit('setMsgArray', [])
       this.message.channel_id = channel.id
-      this.cursorPoint.channel_id = channel.id
-      this.cursorPoint.first = true
-      this.cursorPoint.cursorId = 0
-      this.cursorPoint.empty = false
+      this.$store.commit('initCursorPoint',channel.id)
       this.$store.commit('setIsGetMsgForImgLoad',false)
       this.$store.commit('setIsGetMsgForPreview',false)
       this.$store.commit('setScrollPosition',0)
@@ -140,6 +137,8 @@ let messageMixin = {
     },
     //채널 메시지 전송
     sendMessage: async function (e, isSysMsg) {
+      console.log('send msg')
+      console.log(this.message.content)
       if (e != null) {
         e.preventDefault()
       }

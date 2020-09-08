@@ -26,7 +26,9 @@ class CommonClass {
 
   byteLimit(length) {
     if (length > 30000) {
-      alert('최대 30000byte까지 입력이 가능합니다.')
+      // alert('최대 30000byte까지 입력이 가능합니다.')
+      alert('글자 수가 너무 깁니다.')
+
       return false
     } else {
       return true
