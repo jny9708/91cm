@@ -5,16 +5,18 @@
                    style="margin-left: 5px; width: auto;"></date-picker>
     </i>
     <v-swatches v-model="color" popover-x="left" popover-y="bottom" class="float-right" show-fallback></v-swatches>
-    <div v-if="index==null">
-      <b-form-textarea placeholder="내용을 입력해주세요" v-model="taskContent" @keydown.enter.exact="addTask">
+    <div v-if="index==null" >
+      
+      <b-form-textarea   placeholder="내용을 입력해주세요"  v-model="taskContent" @keydown.enter.exact="addTask">
       </b-form-textarea>
       <div style="display: flex;justify-content: flex-end;margin-top: 15px;">
         <b-button size="sm" variant="primary" style="margin-right: 5px;" @click="addTask">Save</b-button>
         <b-button size="sm" variant="danger" @click="$emit('createFormToggle')">Cancel</b-button>
       </div>
     </div>
-    <div v-else>
-      <b-form-textarea placeholder="내용을 입력해주세요" v-model="taskContent" autofocus>
+    <div v-else >
+      
+      <b-form-textarea placeholder="내용을 입력해주세요"  v-model="taskContent" autofocus>
       </b-form-textarea>
       <div style="display: flex;justify-content: flex-end;margin-top: 15px;">
         <b-button size="sm" variant="primary" style="margin-right: 5px;" @click="editTask(index)">Edit

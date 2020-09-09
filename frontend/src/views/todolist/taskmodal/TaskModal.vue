@@ -1,24 +1,21 @@
 <template>
 <div>
-  <input style="border: 2px solid rgb(153, 222, 222);border-radius: 5px;font-size: 1.75rem;font-weight: 500;" type="text" value="hello"/>
-
-  <v-row justify="center">
     <v-dialog v-model="dialog" scrollable persistent max-width="600px" > 
       <template v-slot:activator="{ on, attrs }">
-        <v-btn
+        <!-- <v-btn
           color="primary"
           dark
           v-bind="attrs"
           v-on="on"
         >
           Open Dialog
-        </v-btn>
+        </v-btn> -->
+
+        <a class="dropdown-item" v-bind="attrs" v-on="on" >Edit</a>
+
       </template>
       <v-card>
-        <!-- <v-card-title>
-          <span class="headline">User Profile</span>
-        </v-card-title>
-        <v-divider></v-divider> -->
+        
         <div style="padding: 30px 30px 0px 30px;">
 
           <div>
@@ -57,7 +54,7 @@
         </v-card-actions> -->
       </v-card>
     </v-dialog>
-  </v-row>
+  
   </div>
 </template>
 <script>
@@ -65,6 +62,7 @@ import TaskDetails from './TaskDetails'
 import TaskTitle from './TaskTitle'
  export default {
     name: 'TaskModal',
+    props:['taskObj'],
     components:{TaskDetails,TaskTitle},
      data() {
       return {

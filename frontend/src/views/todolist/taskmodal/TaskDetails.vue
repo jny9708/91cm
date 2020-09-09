@@ -86,11 +86,55 @@
                     </div>
                     <div>
                         <v-swatches swatch-size=20 shapes="circles" v-model="testobj.color" @input="seleteTaskColor" inline></v-swatches>
-                        <!-- <button class="task-add-button">
-                            <v-icon class="task-icon-add">add</v-icon>
-                        </button> -->
                     </div>    
-                    
+                </div>
+
+                 <div  class="task-attribute-container">
+                    <div class="task-attribute-title">
+                        <v-icon class="task-attribute-icon">grade</v-icon>
+                        <span>중요도</span>
+                    </div>
+                    <div>
+                        <v-rating
+                            v-model="importance"
+                            background-color="purple lighten-3"
+                            color="purple"
+                            size="22"
+                        >
+                        </v-rating>
+                    </div>    
+                </div> 
+
+                   <div  class="task-attribute-container">
+                    <div class="task-attribute-title">
+                        <v-icon class="task-attribute-icon">donut_large</v-icon>
+                        <span>진행률</span>
+                    </div>
+                    <div>
+                         <v-col cols="12">
+                             <div @click="activeRateEditor" :class="{'progress-rate':!isProgressRate}">
+                            <v-slider
+                            v-model="testobj.progressRate"
+                            readonly
+                            :thumb-size="24"
+                            hide-details
+                            thumb-label="always">
+                            <template v-slot:append>
+                                <v-text-field v-if="isProgressRate"
+                                    v-model="testobj.progressRate"
+                                    autofocus
+                                    @focusout="handleRateFocusOut"
+                                    class="mt-0 pt-0"
+                                    hide-details
+                                    single-line
+                                    type="number"
+                                    style="width: 60px"
+                                ></v-text-field>
+                            </template>
+                            </v-slider>
+                            </div>
+                        </v-col>
+                    </div>    
                 </div> 
 
                  </v-card-text>
@@ -132,7 +176,9 @@ export default {
     },
     data(){
         return{
+            isProgressRate:false,
             pickerOpen:false,
+            importance:0,
             obj:{
                 dateValue:[]
             },
@@ -152,7 +198,8 @@ export default {
                 end_date:'2020-09-24T07:02:16.000+0000',
                 color:'#8E43AD',
                 title:null,
-                member:[{id:1,name:'홍길동'}]
+                member:[{id:1,name:'홍길동'}],
+                progressRate:20
             },
             visibleDateValue:'',
             
@@ -166,8 +213,12 @@ export default {
             }
         }
     },methods:{
-
-       
+        handleRateFocusOut:function(){
+           this.isProgressRate = false
+        },
+       activeRateEditor:function(){
+           this.isProgressRate = true
+       },
         seleteTaskColor:function(val){
             console.log(val)
         },

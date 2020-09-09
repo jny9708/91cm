@@ -71,6 +71,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="moreDropdown"
                          x-placement="bottom-end"
                          style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-140px, 30px, 0px);">
+                      <TaskModal :taskObj="task"/>
                       <a class="dropdown-item" @click="editFormToggle(index)">Edit</a>
                       <a class="dropdown-item" v-if="task.state" @click="editTask(task,false)">Done</a>
                       <a class="dropdown-item" v-else @click="editTask(task,true)">Revoke</a>
@@ -99,7 +100,7 @@
       </ol>
 
     </div>
-
+   
 
   </div>
 </template>
@@ -112,6 +113,7 @@
   import 'vue-swatches/dist/vue-swatches.css'
   import {mapGetters} from "vuex";
   import TaskEdit from "../views/todolist/TaskEdit";
+  import TaskModal from '../views/todolist/taskmodal/TaskModal'
 
   export default {
     name: 'TaskList',
@@ -144,7 +146,8 @@
       TaskEdit,
       draggable,
       DatePicker,
-      VSwatches
+      VSwatches,
+      TaskModal
     },
     data() {
       return {
@@ -267,7 +270,7 @@
         this.create = !this.create
         this.taskContent = ''
       },
-      editFormToggle: function (index) {
+      editFormToggle: function (index,task) {
         this.editSelector = index
       },
       setTaskListName: function () {
