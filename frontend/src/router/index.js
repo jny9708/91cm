@@ -16,6 +16,7 @@ import CopyRight from "../views/util/CopyRight";
 import UserInfo from "../views/user/UserInfo";
 import AppInfo from "../views/main/AppInfo";
 import axios from 'axios'
+import Test from '../views/Test'
 
 Vue.use(VueRouter)
 
@@ -59,7 +60,7 @@ const routes = [
   {
     path: '/about',
     name: 'mains',
-    component: TaskModal
+    component: Test
   },
   {
     path: '*',

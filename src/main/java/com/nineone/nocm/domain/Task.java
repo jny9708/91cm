@@ -20,4 +20,13 @@ public class Task {
 	private Date end_date;
 	private String color;
 	private String title;
+	private int prog_rate;
+	private int importance;
+	private String assignee;
+	private String reg_username;
+	private String tasklist_name;
+	private String channel_name;
+	private String assignee_name;
+	
+	
 }

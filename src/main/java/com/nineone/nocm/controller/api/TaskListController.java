@@ -41,7 +41,7 @@ public class TaskListController {
 	}
 
 	@RequestMapping(value = "/get/{channel_id}", method = RequestMethod.GET)
-	public List<TaskList> getTaskList(@PathVariable int channel_id) {
+	public List<TaskList> getTaskList(@PathVariable int channel_id) {		
 		return taskListService.getTaskList(channel_id);
 	}
 

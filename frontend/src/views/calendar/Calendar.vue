@@ -144,7 +144,7 @@
         this.selectTask.title = this.eventTitle
         this.selectTask.content = this.taskContent
         this.selectTask.color = this.eventColor
-        this.$http.post('/api/task/update/content', this.selectTask)
+        this.$http.post('/api/task/update/contents', this.selectTask)
           .then(res => {
             this.$store.state.stompClient.send('/sub/todo/' + this.$store.state.currentChannel.id,
               {}, {typename: 'taskUpdate'})

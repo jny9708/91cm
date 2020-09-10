@@ -32,10 +32,10 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public boolean updateTaskContent(Task task) {
+	public boolean updateTaskContents(Task task) {
 		Date edit_date = DateUtil.makeDate();
 		task.setEdit_date(edit_date);
-		return (taskRepository.updateTaskContent(task) > 0 )? true : false;
+		return (taskRepository.updateTaskContents(task) > 0 )? true : false;
 	}
 
 	@Override
@@ -52,5 +52,42 @@ public class TaskServiceImpl implements TaskService {
 			taskRepository.moveTaskPositionByinsert(map);
 			return (taskRepository.updateTaskPosition(map) > 0)? true : false;
 		}
+	}
+
+	@Override
+	public boolean updateTaskContent(Task task) {
+		return (taskRepository.updateTaskContent(task)>0)?true:false;
+	}
+
+	@Override
+	public boolean updateTaskTitle(Task task) {
+		return (taskRepository.updateTaskTitle(task)>0)?true:false;
+	}
+
+	@Override
+	@Transactional
+	public boolean updateTaskDate(Task task) {
+		taskRepository.updateTaskStartDate(task);
+		return (taskRepository.updateTaskEndDate(task)>0)?true:false;
+	}
+
+	@Override
+	public boolean updateTaskColor(Task task) {
+		return (taskRepository.updateTaskColor(task)>0)?true:false;
+	}
+
+	@Override
+	public boolean updateTaskProgRate(Task task) {
+		return (taskRepository.updateTaskProgRate(task)>0)?true:false;
+	}
+
+	@Override
+	public boolean updateTaskImportance(Task task) {
+		return (taskRepository.updateTaskImportance(task)>0)?true:false;
+	}
+
+	@Override
+	public boolean updateTaskAssignee(Task task) {
+		return (taskRepository.updateTaskAssignee(task)>0)?true:false;
 	}
 }

@@ -40,8 +40,8 @@ public class TaskRepositoryImpl implements TaskRepository {
 	}
 
 	@Override
-	public int updateTaskContent(Task task) {
-		return sqlSession.update(namespace + ".updateTaskContent",task);
+	public int updateTaskContents(Task task) {
+		return sqlSession.update(namespace + ".updateTaskContents",task);
 	}
 
 	@Override
@@ -70,6 +70,49 @@ public class TaskRepositoryImpl implements TaskRepository {
 		// 특정 리스트 속 task를 다른 리스트 task로 옮길 때
 		// 영향받는 다른 task들의 position을 update해줄 때
 		return sqlSession.update(namespace + ".moveTaskPositionByinsert",map);
+	}
+
+	@Override
+	public int updateTaskContent(Task task) {
+		return sqlSession.update(namespace + ".updateTaskContent",task);
+	}
+
+	@Override
+	public int updateTaskTitle(Task task) {
+		return sqlSession.update(namespace + ".updateTaskTitle",task);
+	}
+
+	@Override
+	public int updateTaskStartDate(Task task) {
+		System.out.println(task.getStart_date() +"ssss");
+		
+		return sqlSession.update(namespace + ".updateTaskStartDate",task);
+	}
+
+	@Override
+	public int updateTaskEndDate(Task task) {
+		System.out.println(task.getEnd_date() +"ssss");
+		return sqlSession.update(namespace + ".updateTaskEndDate",task);
+	}
+
+	@Override
+	public int updateTaskColor(Task task) {
+		return sqlSession.update(namespace + ".updateTaskColor",task);
+	}
+
+	@Override
+	public int updateTaskProgRate(Task task) {
+		return sqlSession.update(namespace + ".updateTaskProgRate",task);
+	}
+
+	@Override
+	public int updateTaskImportance(Task task) {
+		return sqlSession.update(namespace + ".updateTaskImportance",task);
+	}
+
+	@Override
+	public int updateTaskAssignee(Task task) {
+		return sqlSession.update(namespace + ".updateTaskAssignee",task);
 	}
 
 }

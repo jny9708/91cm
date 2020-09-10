@@ -125,6 +125,7 @@
         isSmallWidth: 'getIsSmallWidth'
       }),
       getTasks: function () {
+        console.log(this.taskList.tasks)
         return this.taskList.tasks
       },
       disableCheck: function () {
@@ -249,7 +250,7 @@
       editTask: function (task, state) {
         console.log(task,'task!!')
         task.state = state
-        this.$http.post('/api/task/update/content', task)
+        this.$http.post('/api/task/update/contents', task)
           .then(res => {
             this.$store.state.stompClient.send('/sub/todo/' + this.currentChannel.id, {}, {typename: 'taskUpdate'})
           }).catch(error => {

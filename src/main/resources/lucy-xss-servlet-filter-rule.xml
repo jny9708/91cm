@@ -6,11 +6,18 @@
            <name>xssPreventerDefender</name>
            <class>com.navercorp.lucy.security.xss.servletfilter.defender.XssPreventerDefender</class>
        </defender>
-
    </defenders>
+   
+   
 
     <!-- default defender 선언, 별다른 defender 선언이 없으면 default defender를 사용해 필터링 한다. -->
     <default>
         <defender>xssPreventerDefender</defender>
     </default>
+    
+     <url-rule-set>
+      	<url-rule>
+      		<url disable="true">/api/task/update/content</url>
+      	</url-rule>
+     </url-rule-set>
 </config>

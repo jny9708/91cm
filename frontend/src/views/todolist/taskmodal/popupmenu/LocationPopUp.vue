@@ -1,5 +1,6 @@
 <template>
     <v-menu 
+      disabled
       v-model="menu"
       :close-on-content-click="false"
       :nudge-width="200"
@@ -9,18 +10,18 @@
     >
         <template v-slot:activator="{ on, attrs }">
         
-            <button v-if="testobj.tasklist_id==null" class="task-add-button" @click="activeMenu" v-bind="attrs" v-on="on">
+            <button v-if="taskObj.tasklist_id==null" class="task-add-button" @click="activeMenu" v-bind="attrs" v-on="on">
                 <v-icon class="task-icon-add">add</v-icon>
             </button>     
 
-            <v-chip v-if="testobj.tasklist_id!=null"
+            <v-chip v-else
                     v-bind="attrs" v-on="on"
                             color="#e6e8ec"
                             label
                             text-color="black"
                             @click="activeMenu"
                             >
-                            {{ testobj.channel_name + ' > ' + testobj.tasklist_name}}
+                            {{ taskObj.channel_name + ' > ' + taskObj.tasklist_name}}
             </v-chip>    
         </template>
 
@@ -93,7 +94,7 @@
 export default {
     name:'LocationPopup',
     components:{},    
-    props:['testobj'],
+    props:['taskObj'],
     data(){
         return{
             menu:false,

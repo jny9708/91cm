@@ -90,7 +90,7 @@
         if (this.color != null) {
           task.color = this.color
         }
-        this.$http.post('/api/task/update/content', task)
+        this.$http.post('/api/task/update/contents', task)
           .then(res => {
             this.$store.state.stompClient.send('/sub/todo/' + this.$store.state.currentChannel.id, null, {typename: 'taskUpdate'})
             this.$emit('editFormToggle', -1)

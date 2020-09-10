@@ -10,22 +10,20 @@
     >
      <template v-slot:activator="{ on, attrs }">
         
-            <button v-if="testobj.member.length==0" class="task-add-button" @click="activeMenu" v-bind="attrs" v-on="on">
+            <button v-if="assignee==null" class="task-add-button" @click="activeMenu" v-bind="attrs" v-on="on">
                 <v-icon class="task-icon-add">add</v-icon>
             </button>     
 
             <v-chip v-else
                 close
-                v-for="(member,index) in testobj.member" :key="index" 
-
-                    v-bind="attrs" v-on="on"
-                            color="#e6e8ec"
-                            label
-                            text-color="black"
-                            @click="activeMenu"
-                            @click:close="deleteAssginedMember"
-                            >
-                            {{ member.name }}
+                v-bind="attrs" v-on="on"
+                        color="#e6e8ec"
+                        label
+                        text-color="black"
+                        @click="activeMenu"
+                        @click:close="deleteAssginedMember"
+                        >
+                        {{ assignee_name }}
             </v-chip>    
         </template>
          <v-card>
@@ -36,12 +34,12 @@
                 <div>
                     <div class="search-box"></div>
                     <div class="">
-                        <div class="loca-list-item-wrap" 
+                        <!-- <div class="loca-list-item-wrap" 
                         v-for="(member,index) in testlist" :key="index"  :class="{'select':addSelectClass(member)}"
                         @click="selectAssignedMember(member)">
                             <span class="myflex-grow verti-align">{{member.name}}</span>
                             <v-icon >check</v-icon>
-                        </div>
+                        </div> -->
                     </div>
                 </div>  
                 
@@ -58,7 +56,7 @@
 <script>
 export default {
     name:'MemberPopUp',
-    props:['testobj'],
+    props:['assignee_name','assignee'],
     computed:{
     
     },

@@ -2,19 +2,22 @@
        <v-card-text style="padding: 20px;max-height: 500px;overflow-y: auto;" v-if="tab==0">
         <div>
             <!-- 설명 에디터 비활성 -->
-            <div @click="enableTaskDescEditor=true"
-                    v-if="!enableTaskDescEditor"
+            <div @click="enableTaskDescEditor"
+                    v-show="!isTaskDescEditor"
                     class="task-title-pannel" >
-                <span class="task-title-content">설명 추가</span>
-                    <v-icon class="task-title-icon-pen">edit</v-icon>   
+                <span class="task-title-content">
+                    <span v-if="taskObj.content==''||taskObj.content==null">설명 추가</span>
+                    <span v-else v-html="taskObj.content"></span>
+                </span>
+                <v-icon class="task-title-icon-pen">edit</v-icon>   
             </div>
             <!-- 설명 에디터 비활성 끝 -->    
             <!-- 설명 에디터 활성 -->
-            <div  v-else >
-                <quill-editor :options="editorOption"></quill-editor>
+            <div  v-show="isTaskDescEditor" >
+                <quill-editor ref="taskDescEditor" :options="editorOption"></quill-editor>
                 <div class="task-desc-editor-footer" >
-                    <v-btn depressed small dark color="cyan" @click="enableTaskDescEditor=false" >저장</v-btn>
-                    <v-btn depressed small @click="enableTaskDescEditor=false" >취소</v-btn>
+                    <v-btn depressed small dark color="cyan" @click="saveTaskDesc" >저장</v-btn>
+                    <v-btn depressed small @click="isTaskDescEditor=false" >취소</v-btn>
                 </div>
             </div>
             <!-- 설명 에디터 활성 끝 -->
@@ -30,7 +33,7 @@
                         <!-- <button class="task-add-button">
                             <v-icon class="task-icon-add">add</v-icon>
                         </button> -->
-                        <LocationPopUp :testobj="testobj" />
+                        <LocationPopUp :taskObj="taskObj" />
                         
                     </div>    
                 </div>
@@ -44,24 +47,24 @@
                         <!-- <DatePopUp></DatePopUp> -->
 
                         
-                    <button v-if="realobj.taskDate.length==0"  class="task-add-button" @click="pickerOpenFunc" >
+                    <button v-if="taskObj.start_date==null&&taskObj.end_date==null"  class="task-add-button" @click="pickerOpenFunc" >
                         <v-icon class="task-icon-add">add</v-icon>
                     </button>  
                     <div v-else >
-                    <v-chip v-for="(date, index) in obj.dateValue" :key="index"
+                    <v-chip 
                         close
                         color="#e6e8ec"
                         label
                         text-color="black"
                         @click="pickerOpenFunc"
-                        @click:close="taskDateDelete(index)"
+                        @click:close="taskDateDelete($event)"
                         >
-                        {{ date }}
+                        {{ obj.dateValue }}
                     </v-chip>    
                     </div>  
                     <!-- <span v-else>{{ visibleDateValue}}</span> -->
 
-                     <date-picker v-model="realobj.taskDate" @change="handleDateChange" :open.sync="pickerOpen"
+                     <date-picker v-model="taskDate" @change="handleDateChange" :open.sync="pickerOpen"
                       style="visibility: hidden;display:flex;" type="date" range ></date-picker> 
 
                     </div>    
@@ -74,7 +77,7 @@
                         <span>담당자</span>
                     </div>
                     <div>
-                        <MemberPopUp :testobj="testobj"/>
+                        <MemberPopUp :assignee="taskObj.assignee" :assignee_name="taskObj.assignee_name"/>
                     </div>    
                     
                 </div>    
@@ -85,7 +88,7 @@
                         <span>컬러</span>
                     </div>
                     <div>
-                        <v-swatches swatch-size=20 shapes="circles" v-model="testobj.color" @input="seleteTaskColor" inline></v-swatches>
+                        <v-swatches swatch-size=20 shapes="circles" v-model="taskObj.color" @input="seleteTaskColor" inline></v-swatches>
                     </div>    
                 </div>
 
@@ -96,7 +99,7 @@
                     </div>
                     <div>
                         <v-rating
-                            v-model="importance"
+                            v-model="taskObj.importance"
                             background-color="purple lighten-3"
                             color="purple"
                             size="22"
@@ -114,14 +117,14 @@
                          <v-col cols="12">
                              <div @click="activeRateEditor" :class="{'progress-rate':!isProgressRate}">
                             <v-slider
-                            v-model="testobj.progressRate"
+                            v-model="taskObj.prog_rate"
                             readonly
                             :thumb-size="24"
                             hide-details
                             thumb-label="always">
                             <template v-slot:append>
                                 <v-text-field v-if="isProgressRate"
-                                    v-model="testobj.progressRate"
+                                    v-model="taskObj.prog_rate"
                                     autofocus
                                     @focusout="handleRateFocusOut"
                                     class="mt-0 pt-0"
@@ -149,29 +152,30 @@ import VSwatches from 'vue-swatches'
 export default {
     name:'TaskDetails',
     components:{ quillEditor,DatePicker,VSwatches,LocationPopUp,MemberPopUp},
-    props:['tab'],
+    props:['tab','taskObj'],
+    watch:{
+        taskObj:function(){
+        //     this.taskDate = []
+        //     console.log(this.taskObj.start_date,'wa')
+        //     console.log(this.taskObj.end_date,'wa')
+        //    this.taskDate.push(this.replaceDate(this.taskObj.start_date))
+        //    this.taskDate.push(this.replaceDate(this.taskObj.end_date))
+        //     this.$nextTick(()=>{
+        //         console.log(this.taskDate)
+        //             this.obj.dateValue=document.getElementsByClassName('mx-input')[0].value
+        //     })
+        }
+    },
     mounted(){
+            this.taskDate = []
+            this.taskDate.push(this.replaceDate(this.taskObj.start_date))
+            this.taskDate.push(this.replaceDate(this.taskObj.end_date))
+            this.$nextTick(()=>{
+                    console.log(this.taskDate)
+                    this.obj.dateValue=document.getElementsByClassName('mx-input')[0].value
+            })
         this.$nextTick(()=>{
             document.getElementsByClassName('mx-input')[0].hidden=true
-        })
-
-     
-        let val1 = this.testobj.start_date
-        let val2 = this.testobj.end_date
-        let year=val1.substring(0,4)
-        let month = val1.substring(5,7)
-        let day = val1.substring(8,10)
-
-        let year2=val2.substring(0,4)
-        let month2 = val2.substring(5,7)
-        let day2 = val2.substring(8,10)
-
-        let date1=new Date(year,month,day)
-        let date2=new Date(year2,month2,day2)
-        this.realobj.taskDate.push(date1)
-        this.realobj.taskDate.push(date2)
-        this.$nextTick(()=>{
-                this.obj.dateValue.push(document.getElementsByClassName('mx-input')[0].value)
         })
     },
     data(){
@@ -180,11 +184,9 @@ export default {
             pickerOpen:false,
             importance:0,
             obj:{
-                dateValue:[]
+                dateValue:''  // v-chip 
             },
-            realobj:{
-                taskDate:[],
-            },
+            taskDate:[], // datepicker v-model
             testobj:{
                 channel_name:'채널이름',
                 tasklist_name:'리스트이름',
@@ -204,7 +206,7 @@ export default {
             visibleDateValue:'',
             
             menu:false,
-            enableTaskDescEditor: false,
+            isTaskDescEditor: false,
             editorOption: {
                 modules: {
                     toolbar: [ ['bold', 'italic', 'underline'], [{ 'list': 'ordered'}, { 'list': 'bullet' }],['clean']    ] ,
@@ -213,6 +215,22 @@ export default {
             }
         }
     },methods:{
+        saveTaskDesc:function(){
+            this.taskObj.content =  this.$refs.taskDescEditor.quill.root.innerHTML
+            this.$http.post('/api/task/update/content', this.taskObj).then(res => {
+                    this.isTaskDescEditor=false
+                    this.$store.state.stompClient.send('/sub/todo/' + this.$store.state.currentChannel.id, null, {typename: 'taskUpdate'})
+                }).catch(error => {
+                    console.error(error)
+                })
+        },
+        enableTaskDescEditor:function(){
+            this.isTaskDescEditor = true
+            this.$refs.taskDescEditor.quill.clipboard.dangerouslyPasteHTML(this.taskObj.content);
+        },
+        replaceDate:function(date){
+            return new Date(date)
+        },
         handleRateFocusOut:function(){
            this.isProgressRate = false
         },
@@ -223,25 +241,41 @@ export default {
             console.log(val)
         },
         pickerOpenFunc:function(){
-            // this.$nextTick(()=>{
-                this.pickerOpen=true
-                // console.log(this.realobj.taskDate)
-            // })
-            
+            this.pickerOpen=true
         },
         handleDateChange:function(value, type){
-            console.log(this.realobj.taskDate)
-            this.obj.dateValue=[]
+            console.log(this.taskDate)
+            this.obj.dateValue=''
+            let date
             this.$nextTick(()=>{
-                this.obj.dateValue.push(document.getElementsByClassName('mx-input')[0].value)
-                // this.visibleDateValue = document.getElementsByClassName('mx-input')[0].value
+                date = document.getElementsByClassName('mx-input')[0].value
+                this.taskObj.start_date = this.taskDate[0]
+                this.taskObj.end_date = this.taskDate[1]
+                this.$http.post('/api/task/update/deadline', this.taskObj)
+                .then(res => {
+                    this.obj.dateValue=date
+                    this.$store.state.stompClient.send('/sub/todo/' + this.$store.state.currentChannel.id, null, {typename: 'taskUpdate'})
+                }).catch(error => {
+                    console.error(error)
+                })
             })
-            
         },
         taskDateDelete:function(index){
             console.log(index)
-            this.obj.dateValue.splice (index,1)
-            this.realobj.taskDate = []
+            this.obj.dateValue=''
+            this.taskDate = []
+            this.taskObj.start_date = this.taskDate[0]
+            this.taskObj.end_date = this.taskDate[1]
+            // 나중에 trigger 활용하려면 api 분기해야 할 듯
+               // 일단 임시로 이렇게 해놓기.. 
+                this.$http.post('/api/task/update/deadline', this.taskObj)
+                .then(res => {
+                    this.obj.dateValue=date
+                    this.$store.state.stompClient.send('/sub/todo/' + this.$store.state.currentChannel.id, null, {typename: 'taskUpdate'})
+                }).catch(error => {
+                    console.error(error)
+                })
+
         }
         
    

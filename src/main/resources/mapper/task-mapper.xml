@@ -29,12 +29,44 @@
 		update task set position = (position - 1 ) where position > #{position} and tasklist_id = #{tasklist_id}
 	</update>
 
-    <update id="updateTaskContent">
+    <update id="updateTaskContents">
 		update task set content = #{content}, edit_date = #{edit_date}, start_date = #{start_date},
 		end_date = #{end_date}, color = #{color}, title = #{title}, state = #{state}
 		where id = #{id}
 	</update>
-
+	
+	<update id="updateTaskContent">
+		UPDATE TASK SET CONTENT = #{content} where id =#{id}
+	</update>
+	
+	<update id="updateTaskTitle">
+		UPDATE TASK SET TITLE = #{title} where id =#{id}
+	</update>
+	
+	<update id="updateTaskStartDate">
+		UPDATE TASK SET START_DATE = #{start_date} where id =#{id}
+	</update>
+	
+	<update id="updateTaskEndDate">
+		UPDATE TASK SET END_DATE = #{end_date} where id =#{id}
+	</update>
+	
+	<update id="updateTaskColor">
+		UPDATE TASK SET COLOR = #{color} where id =#{id}
+	</update>
+	
+	<update id="updateTaskProgRate">
+		UPDATE TASK SET PROG_RATE = #{prog_rate} where id =#{id}
+	</update>
+	
+	<update id="updateTaskImportance">
+		UPDATE TASK SET IMPORTANCE = #{importance} where id =#{id}
+	
+	</update>
+	<update id="updateTaskAssignee">
+		UPDATE TASK SET ASSIGNEE = #{assignee} where id =#{id}
+	</update>
+	
     <!-- <update id="updateTaskPosition">
         update task set
             position = (select * from (select ifnull(max(position)+1, 1) from task where tasklist_id = #{tasklist_id}) a),

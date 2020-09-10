@@ -11,7 +11,7 @@
           Open Dialog
         </v-btn> -->
 
-        <a class="dropdown-item" v-bind="attrs" v-on="on" >Edit</a>
+        <a class="dropdown-item" v-bind="attrs" v-on="on" >Details</a>
 
       </template>
       <v-card>
@@ -21,7 +21,7 @@
           <div>
             <div class="myflex">
               <div class="verti-align" style="font-size:11px;">
-                <span>작성자</span> <span>홍길동</span> <span> 작성일</span> <span>2020-09-03</span>
+                <span>작성자</span> <span>{{taskObj.reg_username}}</span> <span> 작성일</span> <span>{{taskObj.register_date.substring(0,10)}}</span>
               </div>
               
               <div class="grow-end">
@@ -30,7 +30,7 @@
               </div>
             </div>
 
-            <TaskTitle></TaskTitle>
+            <TaskTitle :taskTitle="taskObj.title"></TaskTitle>
             
           </div>
         </div>
@@ -41,11 +41,11 @@
             color="#00bcd4"
             @change="click"
             >
-                <v-tab >Item One</v-tab>
-                <v-tab >Item Two</v-tab>
-                <v-tab>Item Three</v-tab>
+                <v-tab >상세</v-tab>
+                <v-tab >코멘트</v-tab>
+                <v-tab>첨부파일</v-tab>
             </v-tabs>
-            <TaskDetails :tab="tab"></TaskDetails>
+            <TaskDetails :tab="tab" :taskObj="taskObj" ></TaskDetails>
         <!-- <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>

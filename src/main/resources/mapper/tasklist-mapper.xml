@@ -13,12 +13,6 @@
     	<result property="edit_date" column="edit_date"/>
 		<result property="position" column="position"/>
 		<collection property="tasks" column="id" javaType="java.util.ArrayList" ofType="com.nineone.nocm.domain.Task" select="getTask">
-			<result property="id" column="id"/>
-			<result property="tasklist_id" column="tasklist_id"/>
-			<result property="content" column="content"/>
-			<result property="register_date" column="register_date"/>
-			<result property="edit_date" column="edit_date"/>
-			<result property="position" column="position"/>
 		</collection>
     </resultMap>
 
@@ -51,7 +45,22 @@
 	</select>
 	
 	<select id="getTask" resultType="com.nineone.nocm.domain.Task">
-		select * from task where tasklist_id = #{id} order by position
+		SELECT T.*,
+			   M1.NAME REG_USERNAME,
+			   TL.NAME TASKLIST_NAME,
+			   C.NAME CHANNEL_NAME,
+			   M2.NAME ASSIGNEE_NAME
+	      FROM TASK T
+	      JOIN MEMBER M1
+	        ON M1.EMAIL = T.MEMBER_EMAIL
+	      JOIN TASKLIST TL
+	        ON T.TASKLIST_ID = TL.ID
+	      JOIN CHANNEL C 
+	        ON TL.CHANNEL_ID = C.ID
+	 LEFT JOIN MEMBER M2
+	        ON M2.EMAIL = T.ASSIGNEE
+	     WHERE T.TASKLIST_ID = #{id}
+	  ORDER BY T.POSITION
 	</select>
 	
 	<!-- <update id="initTaskListPosition">

@@ -1,4 +1,7 @@
 @import "@/assets/css/common.scss";
+.df{
+    display: flex;
+}
 .grow-end{
     @extend .myflex;
     @extend .myflex-grow;
@@ -30,7 +33,7 @@
     word-break: break-all;
 }
 .task-title-pannel{
-  @extend .myflex;
+  display: flex;
   
   h4{
     margin:0px;
@@ -73,7 +76,7 @@
 
 
     .task-title-pannel{
-    @extend .myflex;
+    @extend .df;
     
     h4{
         margin:0px;

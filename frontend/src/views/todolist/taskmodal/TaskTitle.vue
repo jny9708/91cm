@@ -10,9 +10,16 @@
                 
                 >
 
-                <h4 class="task-title-content"   >
+                
+
+                <h4 class="task-title-content" v-if="taskTitle==null||taskTitle==''">
+                  taskTitle을 입력해주세요.
+                </h4>
+
+                <h4 class="task-title-content" v-else>
                   {{ taskTitle }}
                 </h4>
+
                 
                 <v-icon class="task-title-icon-pen">edit</v-icon>
               </div>
@@ -22,9 +29,9 @@
 <script>
 export default {
     name: 'TaskTitle',
+    props:['taskTitle'],
     data() {
       return {
-            taskTitle:'Task Title 입니다.',
             enableTaskTitleInput:false
       }
     },

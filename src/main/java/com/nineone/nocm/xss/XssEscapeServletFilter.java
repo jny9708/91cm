@@ -8,6 +8,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import com.navercorp.lucy.security.xss.servletfilter.XssEscapeFilter;
 
@@ -21,7 +22,15 @@ public class XssEscapeServletFilter implements Filter{
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		chain.doFilter(new XssEscapeServletFilterWrapper(request, xssEscapeFilter), response);
+		if (request instanceof HttpServletRequest) {
+			String uri = ((HttpServletRequest)request).getRequestURI().toString();
+			System.out.println(uri);
+			if(!uri.equals("/api/task/update/content")) {
+				chain.doFilter(new XssEscapeServletFilterWrapper(request, xssEscapeFilter), response);
+			}else {
+				chain.doFilter(request, response);
+			}
+		}
 	}
 
 	@Override
