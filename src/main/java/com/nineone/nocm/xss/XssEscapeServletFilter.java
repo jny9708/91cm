@@ -24,7 +24,6 @@ public class XssEscapeServletFilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		if (request instanceof HttpServletRequest) {
 			String uri = ((HttpServletRequest)request).getRequestURI().toString();
-			System.out.println(uri);
 			if(!uri.equals("/api/task/update/content")) {
 				chain.doFilter(new XssEscapeServletFilterWrapper(request, xssEscapeFilter), response);
 			}else {

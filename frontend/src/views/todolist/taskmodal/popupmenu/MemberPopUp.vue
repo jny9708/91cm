@@ -34,12 +34,12 @@
                 <div>
                     <div class="search-box"></div>
                     <div class="">
-                        <!-- <div class="loca-list-item-wrap" 
-                        v-for="(member,index) in testlist" :key="index"  :class="{'select':addSelectClass(member)}"
+                        <div class="loca-list-item-wrap" 
+                        v-for="(member,index) in channelUsers" :key="member.email"  :class="{'select':addSelectClass(member)}"
                         @click="selectAssignedMember(member)">
                             <span class="myflex-grow verti-align">{{member.name}}</span>
                             <v-icon >check</v-icon>
-                        </div> -->
+                        </div>
                     </div>
                 </div>  
                 
@@ -56,30 +56,45 @@
 <script>
 export default {
     name:'MemberPopUp',
-    props:['assignee_name','assignee'],
+    props:['assignee_name','assignee','id'],
     computed:{
     
     },
     methods:{
          addSelectClass:function(member){
-            return this.testobj.member.filter(mem=>{
-                return mem.id == member.id
-            }).length>0
+             return this.assigneeProps == member.email
+             
+             // 아래는 다중 선택일때 사용
+            // return this.testobj.member.filter(mem=>{
+            //     return mem.id == member.id
+            // }).length>0
         },
         activeMenu:function(){
+            this.assigneeProps = this.assignee
             this.menu=true
         },
         deleteAssginedMember:function(){
 
         },selectAssignedMember:function(mem){
-            this.testobj.member.push(mem)
+            this.assigneeProps = mem.email
         },
         saveAssignedMember:function(){
             // axios...
+            // let obj = {
+            //     assignee: mem.email,
+            //     id:this.id
+            // }
+            // this.$http.post('/api/task/update/assignee', obj)
+            //     .then(res => {
+            //         this.$store.state.stompClient.send('/sub/todo/' + this.$store.state.currentChannel.id, null, {typename: 'taskUpdate'})
+            //     }).catch(error => {
+            //         console.error(error)
+            //     })
         }
     },
     data(){
         return{
+            assigneeProps:'',
             menu:false,
              testlist:[{
                 name:'홍길동1',

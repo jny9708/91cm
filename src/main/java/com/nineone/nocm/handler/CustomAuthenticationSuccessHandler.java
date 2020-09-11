@@ -25,7 +25,6 @@ public class CustomAuthenticationSuccessHandler extends  SavedRequestAwareAuthen
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		System.out.println("뭔데 이상한 곳으로 리다이렉션되냐구");
 		if(request.getParameter("email")!=null) {
 			User user = userRepository.getUserfindByEmail(request.getParameter("email"));
 			user.setPassword(null);

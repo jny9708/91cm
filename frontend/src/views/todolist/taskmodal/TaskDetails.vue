@@ -65,6 +65,7 @@
                     <!-- <span v-else>{{ visibleDateValue}}</span> -->
 
                      <date-picker v-model="taskDate" @change="handleDateChange" :open.sync="pickerOpen"
+
                       style="visibility: hidden;display:flex;" type="date" range ></date-picker> 
 
                     </div>    
@@ -77,7 +78,7 @@
                         <span>담당자</span>
                     </div>
                     <div>
-                        <MemberPopUp :assignee="taskObj.assignee" :assignee_name="taskObj.assignee_name"/>
+                        <MemberPopUp :assignee="taskObj.assignee" :assignee_name="taskObj.assignee_name" :id="taskObj.id"/>
                     </div>    
                     
                 </div>    
@@ -155,25 +156,11 @@ export default {
     props:['tab','taskObj'],
     watch:{
         taskObj:function(){
-        //     this.taskDate = []
-        //     console.log(this.taskObj.start_date,'wa')
-        //     console.log(this.taskObj.end_date,'wa')
-        //    this.taskDate.push(this.replaceDate(this.taskObj.start_date))
-        //    this.taskDate.push(this.replaceDate(this.taskObj.end_date))
-        //     this.$nextTick(()=>{
-        //         console.log(this.taskDate)
-        //             this.obj.dateValue=document.getElementsByClassName('mx-input')[0].value
-        //     })
+            this.deadlineSetting()    
         }
     },
     mounted(){
-            this.taskDate = []
-            this.taskDate.push(this.replaceDate(this.taskObj.start_date))
-            this.taskDate.push(this.replaceDate(this.taskObj.end_date))
-            this.$nextTick(()=>{
-                    console.log(this.taskDate)
-                    this.obj.dateValue=document.getElementsByClassName('mx-input')[0].value
-            })
+        this.deadlineSetting()
         this.$nextTick(()=>{
             document.getElementsByClassName('mx-input')[0].hidden=true
         })
@@ -215,6 +202,17 @@ export default {
             }
         }
     },methods:{
+        deadlineSetting:function(){
+            this.taskDate = []
+            if(this.taskObj.start_date!=null&&this.taskObj.end_date!=null){
+                this.taskDate.push(this.replaceDate(this.taskObj.start_date))
+                this.taskDate.push(this.replaceDate(this.taskObj.end_date))
+            }
+            this.$nextTick(()=>{
+                    console.log(this.taskDate)
+                    this.obj.dateValue=document.getElementsByClassName('mx-input')[0].value
+            })
+        },
         saveTaskDesc:function(){
             this.taskObj.content =  this.$refs.taskDescEditor.quill.root.innerHTML
             this.$http.post('/api/task/update/content', this.taskObj).then(res => {
@@ -238,14 +236,19 @@ export default {
            this.isProgressRate = true
        },
         seleteTaskColor:function(val){
-            console.log(val)
+            this.taskObj.color = val
+            this.$http.post('/api/task/update/color', this.taskObj)
+                .then(res => {
+                    this.$store.state.stompClient.send('/sub/todo/' + this.$store.state.currentChannel.id, null, {typename: 'taskUpdate'})
+                }).catch(error => {
+                    console.error(error)
+                })
         },
         pickerOpenFunc:function(){
             this.pickerOpen=true
         },
         handleDateChange:function(value, type){
             console.log(this.taskDate)
-            this.obj.dateValue=''
             let date
             this.$nextTick(()=>{
                 date = document.getElementsByClassName('mx-input')[0].value

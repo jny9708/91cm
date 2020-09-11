@@ -115,7 +115,7 @@
     updated() {
       this.scrollToEnd()
     },
-    activated() {``
+    activated() {
       if (this.$store.state.oldComponent != 'main' && this.$store.state.selectComponent == 'main') {
         this.scrollToEnd(true)
       }

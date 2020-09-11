@@ -70,6 +70,7 @@ public class TaskController {
 	}
 	@RequestMapping(value="/update/assignee",method = RequestMethod.POST)
 	public boolean updateTaskAssignee(@RequestBody Task task) {
+		System.out.println(task.getAssignee());
 		return taskService.updateTaskAssignee(task);
 	}
 	

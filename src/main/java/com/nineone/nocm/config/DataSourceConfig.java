@@ -22,8 +22,10 @@ public class DataSourceConfig {
 		HikariConfig config = new HikariConfig();
         config.setMaximumPoolSize(10);
         config.setMinimumIdle(5);
-        config.setDriverClassName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy");
-        config.setJdbcUrl("jdbc:log4jdbc:mysql://localhost:3306/nocm?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&verifyServerCertificate=false&useSSL=false");
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/nocm?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&verifyServerCertificate=false&useSSL=false");
+//        config.setDriverClassName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy");
+//        config.setJdbcUrl("jdbc:log4jdbc:mysql://localhost:3306/nocm?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&verifyServerCertificate=false&useSSL=false");
         config.addDataSourceProperty("user", "91cm");
         config.addDataSourceProperty("password", "91cm");
 		return config;
